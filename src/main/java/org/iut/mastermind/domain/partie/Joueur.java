@@ -11,17 +11,11 @@ public class Joueur {
         this.nom = nom;
     }
 
-    // getter nom joueur
-    public String getNom() {
-        return this.nom;
-    }
-
     // equals
     @Override
     public boolean equals(Object o) {
         if (o instanceof Joueur) {
-            Joueur j = (Joueur) o;
-            return this.nom.equals(j.nom);
+            return this.nom.equals(((Joueur) o).nom);
         }
         return false;
     }

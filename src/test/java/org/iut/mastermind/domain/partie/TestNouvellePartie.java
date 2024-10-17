@@ -66,8 +66,7 @@ public class TestNouvellePartie {
         var argPartie = ArgumentCaptor.forClass(Partie.class);
         verify(partieRepository)
                 .create(argPartie.capture());
-        var partie = argPartie.getValue();
-        return partie;
+        return argPartie.getValue();
     }
 }
 

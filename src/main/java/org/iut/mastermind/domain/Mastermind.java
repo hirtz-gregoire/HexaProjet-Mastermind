@@ -4,7 +4,6 @@ import org.iut.mastermind.domain.partie.Joueur;
 import org.iut.mastermind.domain.partie.Partie;
 import org.iut.mastermind.domain.partie.PartieRepository;
 import org.iut.mastermind.domain.partie.ResultatPartie;
-import org.iut.mastermind.domain.proposition.Reponse;
 import org.iut.mastermind.domain.tirage.MotsRepository;
 import org.iut.mastermind.domain.tirage.ServiceNombreAleatoire;
 import org.iut.mastermind.domain.tirage.ServiceTirageMot;
@@ -25,7 +24,7 @@ public class Mastermind {
     // et on initialise une nouvelle partie et on la stocke
     public boolean nouvellePartie(Joueur joueur) {
         boolean result = false;
-        if (!partieRepository.getPartieEnregistree(joueur).isPresent()) {
+        if (partieRepository.getPartieEnregistree(joueur).isEmpty()) {
             partieRepository.create(Partie.create(joueur, serviceTirageMot.tirageMotAleatoire()));
         }
         return result;
@@ -54,14 +53,6 @@ public class Mastermind {
     // si la partie en cours est vide, on renvoie false
     // sinon, on évalue si la partie est terminée
     private boolean isJeuEnCours(Optional<Partie> partieEnCours) {
-        if (partieEnCours.isPresent()){
-            if (!partieEnCours.get().isTerminee()){
-                return true;
-            }else{
-                return false;
-            }
-        }else{
-            return false;
-        }
+        return partieEnCours.filter(partie -> !partie.isTerminee()).isPresent();
     }
 }
